@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    name: mysql-trade
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.11.133:3306/trade?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: customer
