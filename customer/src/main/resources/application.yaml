@@ -14,3 +14,7 @@ spring:
         enabled: true
         login-username: customer
         allow: 127.0.0.1
+  liquibase:
+    enabled: true
+    default-schema: trade
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
