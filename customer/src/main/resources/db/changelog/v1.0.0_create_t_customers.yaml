@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: v1.0.0_create_t_customers
+      author: reallth
+      changes:
+        - createTable:
+            tableName: t_customers
+            remarks: '客户表'
+            columns:
+              - column:
+                  name: customer_id
+                  type: BIGINT
+                  remarks: '客户唯一标识符 (主键)'
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  remarks: '客户全名'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  remarks: '客户电子邮件地址 (唯一约束)'
+                  constraints:
+                    unique: true
+                    nullable: true # SQL中明确指定了 NULL
+              - column:
+                  name: gender
+                  type: VARCHAR(16)
+                  remarks: '客户性别'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: signup_date
+                  type: DATE
+                  remarks: '客户注册日期'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country
+                  type: VARCHAR(100)
+                  remarks: '客户居住国家'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: BIGINT
+                  remarks: '乐观锁版本号'
+                  defaultValueNumeric: '0'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: TINYINT
+                  remarks: '逻辑删除标志 (0=否, 1=是)'
+                  defaultValueNumeric: '0'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  remarks: '插入时间'
+                  defaultValueComputed: 'CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  remarks: '更新时间'
+                  defaultValueComputed: 'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deleted_at
+                  type: TIMESTAMP
+                  remarks: '逻辑删除时间'
+                  constraints:
+                    nullable: true

@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: v1.0.0_create_t_customers.yaml
+      relativeToChangelogFile: true
