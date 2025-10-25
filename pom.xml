@@ -24,6 +24,7 @@
         <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
         <mybatis-plus.version>3.5.14</mybatis-plus.version>
         <druid.version>1.2.27</druid.version>
+        <liquibase.version>4.31.1</liquibase.version>
     </properties>
 
     <dependencyManagement>
@@ -60,6 +61,11 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-3-starter</artifactId>
                 <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
