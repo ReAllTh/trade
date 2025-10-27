@@ -25,7 +25,7 @@ public class CustomerSignupReq {
     private String email;
 
     @NotBlank(message = "gender should not be null")
-    @Pattern(regexp = "^(Male|Female)$")
+    @Pattern(regexp = "^(Male|Female)$", message = "gender should be 'Male' or 'Female'")
     private String gender;
 
     @NotBlank(message = "country should not be null")
