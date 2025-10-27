@@ -3,6 +3,7 @@ package com.kaismemo.trade.controller;
 import com.kaismemo.trade.converter.CustomerConverter;
 import com.kaismemo.trade.domain.bo.CustomerBo;
 import com.kaismemo.trade.domain.req.CustomerSignupReq;
+import com.kaismemo.trade.entity.Response;
 import com.kaismemo.trade.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +32,9 @@ public class CustomerController {
     }
 
     @PostMapping("/signup")
-    public void signup(@Valid @RequestBody CustomerSignupReq customerSignupReq) {
+    public Response<?> signup(@Valid @RequestBody CustomerSignupReq customerSignupReq) {
         CustomerBo bo = customerConverter.toBo(customerSignupReq);
         customerService.signup(bo);
+        return Response.ok(null);
     }
 }
