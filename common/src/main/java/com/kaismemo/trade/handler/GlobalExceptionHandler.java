@@ -40,6 +40,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public Response<?> handleGeneralException(Exception e) {
         log.error(e.getLocalizedMessage(), e);
-        return new Response<>(500, "system error: " + e.getLocalizedMessage(), null);
+        return new Response<>(500, "system error", null);
     }
 }
