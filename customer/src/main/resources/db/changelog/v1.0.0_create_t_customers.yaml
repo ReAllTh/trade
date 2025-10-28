@@ -8,7 +8,7 @@ databaseChangeLog:
             remarks: '客户表'
             columns:
               - column:
-                  name: customer_id
+                  name: id
                   type: BIGINT
                   remarks: '客户唯一标识符 (主键)'
                   constraints:
