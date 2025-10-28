@@ -1,7 +1,6 @@
 package com.kaismemo.trade.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,10 +16,21 @@ import java.time.LocalDateTime;
 @Data
 public class BasePo {
     @TableId(type = IdType.ASSIGN_ID)
-    private long id;
-    private long version;
-    private boolean isDeleted;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private Long id;
+
+    @Version
+    private Long version;
+
+    @TableLogic
+    @TableField(select = false)
+    private Boolean isDeleted;
+
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createdAt;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updatedAt;
+
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime deletedAt;
 }
