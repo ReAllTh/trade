@@ -1,7 +1,9 @@
 package com.kaismemo.trade.config;
 
+import com.kaismemo.trade.handler.BasePoMetaObjectHandler;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 /**
  * mapstruct converter 测试配置类
@@ -14,6 +16,10 @@ import org.springframework.context.annotation.ComponentScan;
  * @since 1.0.0
  */
 @TestConfiguration
+@Import({
+        MybatisPlusConfig.class,
+        BasePoMetaObjectHandler.class
+})
 @ComponentScan(basePackages = "com.kaismemo.trade.converter")
-public class ConverterTestConfig {
+public class MyBatisPlusTestConfig {
 }
