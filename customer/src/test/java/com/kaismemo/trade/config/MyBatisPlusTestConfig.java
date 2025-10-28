@@ -2,24 +2,18 @@ package com.kaismemo.trade.config;
 
 import com.kaismemo.trade.handler.BasePoMetaObjectHandler;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 /**
- * mapstruct converter 测试配置类
+ * mybatis plus 测试配置类
  * <p>
- * mapstruct converter 在测试时直接 @SpyBean 没用，因为 @WebMvcTest 默认只会加载 Web 层相关的组件，
- * 而直接 @Import(XXXConverterImpl.class) 又使得测试代码与框架实现向耦合，未来框架实现的类名变了名字会导致相关测试类全部无法工作
- * 所以此处用测试配置类加载 {@link com.kaismemo.trade.converter} 包下的 converter
+ * 使用 @MyBatisPlusTest 的时候，启动的上下文中，只包含有限的 Bean，
+ * 需要用这种方式把额外需要的 Bean 注入上下文中
  *
  * @author reallth
  * @since 1.0.0
  */
 @TestConfiguration
-@Import({
-        MybatisPlusConfig.class,
-        BasePoMetaObjectHandler.class
-})
-@ComponentScan(basePackages = "com.kaismemo.trade.converter")
+@Import({MybatisPlusConfig.class, BasePoMetaObjectHandler.class})
 public class MyBatisPlusTestConfig {
 }

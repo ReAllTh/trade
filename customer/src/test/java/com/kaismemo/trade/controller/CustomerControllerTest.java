@@ -1,7 +1,7 @@
 package com.kaismemo.trade.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kaismemo.trade.config.MyBatisPlusTestConfig;
+import com.kaismemo.trade.config.ConverterTestConfig;
 import com.kaismemo.trade.domain.bo.CustomerBo;
 import com.kaismemo.trade.domain.req.CustomerSignupReq;
 import com.kaismemo.trade.service.CustomerService;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @since 1.0.0
  */
 @WebMvcTest(CustomerController.class)
-@Import(MyBatisPlusTestConfig.class)
+@Import(ConverterTestConfig.class)
 @DisplayName("CustomerController 接口单元测试")
 class CustomerControllerTest {
     @Resource
