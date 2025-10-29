@@ -32,6 +32,6 @@ public class CustomerService {
     public void signup(CustomerBo customerBo) {
         CustomerPo po = customerConverter.toPo(customerBo);
         po.setSignupDate(LocalDate.now());
-        customerMapper.save(po);
+        customerMapper.insert(po);
     }
 }

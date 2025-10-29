@@ -14,7 +14,4 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CustomerMapper extends BaseMapper<CustomerPo> {
-    default void save(CustomerPo customerPo) {
-        this.insert(customerPo);
-    }
 }
