@@ -2,14 +2,14 @@ package com.kaismemo.trade.controller;
 
 import com.kaismemo.trade.converter.CustomerConverter;
 import com.kaismemo.trade.domain.bo.CustomerBo;
+import com.kaismemo.trade.domain.req.CustomerQueryReq;
 import com.kaismemo.trade.domain.req.CustomerSignupReq;
+import com.kaismemo.trade.domain.vo.CustomerVo;
+import com.kaismemo.trade.entity.PageData;
 import com.kaismemo.trade.entity.Response;
 import com.kaismemo.trade.service.CustomerService;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * customer 接口
@@ -36,5 +36,11 @@ public class CustomerController {
         CustomerBo bo = customerConverter.toBo(customerSignupReq);
         customerService.signup(bo);
         return Response.ok(null);
+    }
+
+    @GetMapping("query")
+    public Response<PageData<CustomerVo>> query(@Valid @RequestBody CustomerQueryReq customerQueryReq) {
+        PageData<CustomerVo> result = customerService.query(customerQueryReq);
+        return Response.ok(result);
     }
 }

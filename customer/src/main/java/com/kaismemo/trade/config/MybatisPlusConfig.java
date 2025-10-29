@@ -1,7 +1,9 @@
 package com.kaismemo.trade.config;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,9 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("com.kaismemo.trade.mapper")
 public class MybatisPlusConfig {
     /**
-     * 乐观锁插件
-     * <p>
-     * 可以识别 PO 上标注了 @Version 的字段，将之作为乐观锁版本号，在访问数据库时执行乐观锁逻辑（更改时添加版本约束）
+     * 插件注册
      *
      * @return {@link MybatisPlusInterceptor}
      */
@@ -26,6 +26,7 @@ public class MybatisPlusConfig {
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }
 }
