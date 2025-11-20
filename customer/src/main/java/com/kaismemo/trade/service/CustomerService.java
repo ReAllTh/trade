@@ -74,4 +74,17 @@ public class CustomerService {
         if (updatedCnt == 0)
             throw new BusinessException(100401, "update failed.");
     }
+
+    /**
+     * 用户注销接口
+     *
+     * @param email 目标用户的 email
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void unregisterByEmail(String email) {
+        LambdaQueryWrapper<CustomerPo> queryWrapper = new LambdaQueryWrapper<>() {{
+            eq(CustomerPo::getEmail, email);
+        }};
+        customerMapper.delete(queryWrapper);
+    }
 }
