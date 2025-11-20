@@ -3,6 +3,7 @@ package com.kaismemo.trade.converter;
 import com.kaismemo.trade.domain.bo.CustomerBo;
 import com.kaismemo.trade.domain.po.CustomerPo;
 import com.kaismemo.trade.domain.req.CustomerSignupReq;
+import com.kaismemo.trade.domain.req.CustomerUpdateReq;
 import com.kaismemo.trade.domain.vo.CustomerVo;
 import org.mapstruct.Mapper;
 
@@ -17,6 +18,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface CustomerConverter {
     CustomerBo toBo(CustomerSignupReq customerSignupReq);
+    CustomerBo toBo(CustomerUpdateReq customerUpdateReq);
     CustomerPo toPo(CustomerBo customerBo);
     CustomerVo toVo(CustomerPo customerPo);
 }
