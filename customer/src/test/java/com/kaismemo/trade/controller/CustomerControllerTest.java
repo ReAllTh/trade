@@ -1,10 +1,12 @@
 package com.kaismemo.trade.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kaismemo.trade.config.ConverterTestConfig;
 import com.kaismemo.trade.domain.bo.CustomerBo;
 import com.kaismemo.trade.domain.req.CustomerSignupReq;
 import com.kaismemo.trade.domain.req.CustomerQueryReq;
+import com.kaismemo.trade.domain.req.CustomerUnregisterReq;
 import com.kaismemo.trade.domain.vo.CustomerVo;
 import com.kaismemo.trade.entity.PageData;
 import com.kaismemo.trade.entity.Response;
@@ -174,5 +176,37 @@ class CustomerControllerTest {
         mockMvc.perform(validUpdateHttpReq)
                 .andExpect(status().isOk())
                 .andExpect(content().json(validResponseJson));
+    }
+
+    @Test
+    @DisplayName("合法用户注销")
+    public void should_return_ok_when_valid_unregister_request() throws Exception {
+        CustomerUnregisterReq validUnregisterRequest = new CustomerUnregisterReq() {{
+            setEmail("oguri_cap@kasamutsu.com");
+        }};
+        MockHttpServletRequestBuilder validUnregisterHttpReq = post(BASE_URL + "/unregister")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validUnregisterRequest))
+                .accept(MediaType.APPLICATION_JSON);
+        String expectedResponse = objectMapper.writeValueAsString(Response.ok(null));
+        doNothing().when(customerService).unregisterByEmail(any(String.class));
+        mockMvc.perform(validUnregisterHttpReq)
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @Test
+    @DisplayName("非法用户注销")
+    public void should_return_error_when_invalid_unregister_request() throws Exception {
+        CustomerUnregisterReq validUnregisterRequest = new CustomerUnregisterReq();
+        MockHttpServletRequestBuilder validUnregisterHttpReq = post(BASE_URL + "/unregister")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validUnregisterRequest))
+                .accept(MediaType.APPLICATION_JSON);
+        String expectedResponse = objectMapper.writeValueAsString(Response.error(500, "system error"));
+        doNothing().when(customerService).unregisterByEmail(any(String.class));
+        mockMvc.perform(validUnregisterHttpReq)
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponse));
     }
 }
