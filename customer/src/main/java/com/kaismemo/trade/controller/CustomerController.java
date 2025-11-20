@@ -58,6 +58,12 @@ public class CustomerController {
         return Response.ok(result);
     }
 
+    /**
+     * 用户更新接口
+     *
+     * @param customerUpdateReq 目标用户的信息
+     * @return 更新结果
+     */
     @PostMapping("/update")
     public Response<?> update(@Valid @RequestBody CustomerUpdateReq customerUpdateReq) {
         CustomerBo bo = customerConverter.toBo(customerUpdateReq);
