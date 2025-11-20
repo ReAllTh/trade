@@ -42,6 +42,12 @@ public class CustomerService {
         customerMapper.insert(po);
     }
 
+    /**
+     * 用户查询接口
+     *
+     * @param customerQueryReq 用户查询请求参数
+     * @return 查询结果
+     */
     @Transactional(readOnly = true)
     public PageData<CustomerVo> query(CustomerQueryReq customerQueryReq) {
         LambdaQueryWrapper<CustomerPo> queryWrapper = new LambdaQueryWrapper<>() {{

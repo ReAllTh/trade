@@ -25,7 +25,9 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 乐观锁插件，拦截 update 语句，在更新条件中限定版本
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        // 分页插件，连接 select 语句，增加 limit {offset},{size} 条件，注意非覆盖索引的情况下，会有深分页问题
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }
