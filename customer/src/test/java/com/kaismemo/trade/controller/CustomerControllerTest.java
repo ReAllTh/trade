@@ -3,8 +3,8 @@ package com.kaismemo.trade.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kaismemo.trade.config.ConverterTestConfig;
 import com.kaismemo.trade.domain.bo.CustomerBo;
-import com.kaismemo.trade.domain.req.CustomerQueryReq;
 import com.kaismemo.trade.domain.req.CustomerSignupReq;
+import com.kaismemo.trade.domain.req.CustomerQueryReq;
 import com.kaismemo.trade.domain.vo.CustomerVo;
 import com.kaismemo.trade.entity.PageData;
 import com.kaismemo.trade.entity.Response;
@@ -139,5 +139,40 @@ class CustomerControllerTest {
         mockMvc.perform(invalidHttpReq)
                 .andExpect(status().isOk())
                 .andExpect(content().json(invalidResponseJson));
+    }
+
+    @Test
+    @DisplayName("合法用户更新")
+    public void should_return_ok_when_valid_update_request() throws Exception {
+        CustomerSignupReq validUpdateRequest = new CustomerSignupReq() {{
+            setName("Oguri Chian");
+            setEmail("oguri_cap@kasamutsu.com");
+        }};
+        MockHttpServletRequestBuilder validUpdateHttpReq = post(BASE_URL + "/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validUpdateRequest))
+                .accept(MediaType.APPLICATION_JSON);
+        String validResponseJson = objectMapper.writeValueAsString(Response.ok(null));
+        doNothing().when(customerService).updateByEmail(any(CustomerBo.class));
+        mockMvc.perform(validUpdateHttpReq)
+                .andExpect(status().isOk())
+                .andExpect(content().json(validResponseJson));
+    }
+
+    @Test
+    @DisplayName("非法用户更新")
+    public void should_return_error_when_invalid_update_request() throws Exception {
+        CustomerSignupReq validUpdateRequest = new CustomerSignupReq() {{
+            setName("Oguri Chian");
+        }};
+        MockHttpServletRequestBuilder validUpdateHttpReq = post(BASE_URL + "/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validUpdateRequest))
+                .accept(MediaType.APPLICATION_JSON);
+        String validResponseJson = objectMapper.writeValueAsString(Response.error(500, "system error"));
+        doNothing().when(customerService).updateByEmail(any(CustomerBo.class));
+        mockMvc.perform(validUpdateHttpReq)
+                .andExpect(status().isOk())
+                .andExpect(content().json(validResponseJson));
     }
 }
