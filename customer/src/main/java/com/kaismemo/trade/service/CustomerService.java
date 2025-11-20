@@ -8,6 +8,7 @@ import com.kaismemo.trade.domain.po.CustomerPo;
 import com.kaismemo.trade.domain.req.CustomerQueryReq;
 import com.kaismemo.trade.domain.vo.CustomerVo;
 import com.kaismemo.trade.entity.PageData;
+import com.kaismemo.trade.exception.BusinessException;
 import com.kaismemo.trade.mapper.CustomerMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class CustomerService {
         this.customerConverter = customerConverter;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void signup(CustomerBo customerBo) {
         CustomerPo po = customerConverter.toPo(customerBo);
         po.setSignupDate(LocalDate.now());
@@ -55,5 +56,16 @@ public class CustomerService {
         Page<CustomerPo> pageResult = customerMapper.selectPage(page, queryWrapper);
         List<CustomerVo> resultList = pageResult.getRecords().stream().map(customerConverter::toVo).toList();
         return new PageData<>(pageResult.getTotal(), pageResult.getPages(), pageResult.getCurrent(), pageResult.getSize(), resultList);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateByEmail(CustomerBo customerBo) {
+        LambdaQueryWrapper<CustomerPo> existWrapper = new LambdaQueryWrapper<>() {{
+            eq(CustomerPo::getEmail, customerBo.getEmail());
+        }};
+        CustomerPo updatedCustomerPo = customerConverter.toPo(customerBo);
+        int updatedCnt = customerMapper.update(updatedCustomerPo, existWrapper);
+        if (updatedCnt == 0)
+            throw new BusinessException(100401, "update failed.");
     }
 }
