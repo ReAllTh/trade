@@ -16,8 +16,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * CustomerService 的轻量级集成测试类
@@ -107,5 +106,26 @@ class CustomerServiceTest {
             setName("Goda Complex");
         }};
         assertThrows(BusinessException.class, () -> customerService.updateByEmail(invalidBo));
+    }
+
+    @Test
+    @DisplayName("合法用户注销查询")
+    @Sql(scripts = "/sql/dummy_customers.sql")
+    public void should_void_when_unregister_valid() {
+        String validEmail = "oguri_cap@kasamutsu.com";
+        CustomerQueryReq queryReq = new CustomerQueryReq() {{
+            setEmail(validEmail);
+            setPage(1);
+            setPageSize(10);
+        }};
+        customerService.unregisterByEmail(validEmail);
+        assertTrue(customerService.query(queryReq).getData().isEmpty());
+    }
+
+    @Test
+    @DisplayName("非法用户注销查询")
+    public void should_error_when_unregister_invalid() {
+        String invalidEmail = "goda_katsuhito@joho.com";
+        customerService.unregisterByEmail(invalidEmail);
     }
 }

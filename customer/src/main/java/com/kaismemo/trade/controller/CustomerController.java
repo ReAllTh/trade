@@ -4,6 +4,7 @@ import com.kaismemo.trade.converter.CustomerConverter;
 import com.kaismemo.trade.domain.bo.CustomerBo;
 import com.kaismemo.trade.domain.req.CustomerSignupReq;
 import com.kaismemo.trade.domain.req.CustomerQueryReq;
+import com.kaismemo.trade.domain.req.CustomerUnregisterReq;
 import com.kaismemo.trade.domain.req.CustomerUpdateReq;
 import com.kaismemo.trade.domain.vo.CustomerVo;
 import com.kaismemo.trade.entity.PageData;
@@ -61,6 +62,18 @@ public class CustomerController {
     public Response<?> update(@Valid @RequestBody CustomerUpdateReq customerUpdateReq) {
         CustomerBo bo = customerConverter.toBo(customerUpdateReq);
         customerService.updateByEmail(bo);
+        return Response.ok(null);
+    }
+
+    /**
+     * 用户注销接口
+     *
+     * @param customerUnregisterReq 要注销用户的邮箱地址
+     * @return 删除结果
+     */
+    @PostMapping("/unregister")
+    public Response<?> unregister(@Valid @RequestBody CustomerUnregisterReq customerUnregisterReq) {
+        customerService.unregisterByEmail(customerUnregisterReq.getEmail());
         return Response.ok(null);
     }
 }
