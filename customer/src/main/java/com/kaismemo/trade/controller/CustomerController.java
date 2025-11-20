@@ -31,6 +31,12 @@ public class CustomerController {
         this.customerConverter = customerConverter;
     }
 
+    /**
+     * 用户注册接口
+     *
+     * @param customerSignupReq 用户注册请求，所有参数都不能为空
+     * @return 注册结果
+     */
     @PostMapping("/signup")
     public Response<?> signup(@Valid @RequestBody CustomerSignupReq customerSignupReq) {
         CustomerBo bo = customerConverter.toBo(customerSignupReq);
@@ -38,6 +44,12 @@ public class CustomerController {
         return Response.ok(null);
     }
 
+    /**
+     * 用户分页查询接口
+     *
+     * @param customerQueryReq 用户分页查询请求，页码和页号不能为空
+     * @return 查询结果
+     */
     @GetMapping("query")
     public Response<PageData<CustomerVo>> query(@Valid @RequestBody CustomerQueryReq customerQueryReq) {
         PageData<CustomerVo> result = customerService.query(customerQueryReq);
