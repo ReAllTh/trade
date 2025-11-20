@@ -64,6 +64,11 @@ public class CustomerService {
         return new PageData<>(pageResult.getTotal(), pageResult.getPages(), pageResult.getCurrent(), pageResult.getSize(), resultList);
     }
 
+    /**
+     * 用户更新接口
+     *
+     * @param customerBo 目标用户的邮箱地址
+     */
     @Transactional(rollbackFor = Exception.class)
     public void updateByEmail(CustomerBo customerBo) {
         LambdaQueryWrapper<CustomerPo> existWrapper = new LambdaQueryWrapper<>() {{
