@@ -2,8 +2,9 @@ package com.kaismemo.trade.controller;
 
 import com.kaismemo.trade.converter.CustomerConverter;
 import com.kaismemo.trade.domain.bo.CustomerBo;
-import com.kaismemo.trade.domain.req.CustomerQueryReq;
 import com.kaismemo.trade.domain.req.CustomerSignupReq;
+import com.kaismemo.trade.domain.req.CustomerQueryReq;
+import com.kaismemo.trade.domain.req.CustomerUpdateReq;
 import com.kaismemo.trade.domain.vo.CustomerVo;
 import com.kaismemo.trade.entity.PageData;
 import com.kaismemo.trade.entity.Response;
@@ -42,5 +43,12 @@ public class CustomerController {
     public Response<PageData<CustomerVo>> query(@Valid @RequestBody CustomerQueryReq customerQueryReq) {
         PageData<CustomerVo> result = customerService.query(customerQueryReq);
         return Response.ok(result);
+    }
+
+    @PostMapping("/update")
+    public Response<?> update(@Valid @RequestBody CustomerUpdateReq customerUpdateReq) {
+        CustomerBo bo = customerConverter.toBo(customerUpdateReq);
+        customerService.updateByEmail(bo);
+        return Response.ok(null);
     }
 }
